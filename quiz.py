@@ -8,6 +8,7 @@ from unicodedata import name
 from attr import has
 from tkinter import *
 from tkinter import messagebox
+from pathlib import Path
 
 
 lines = []
@@ -18,6 +19,7 @@ emails = []
 passwords = []
 temp_mail = str()
 name_exist = False
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 for i in range(4):
@@ -25,7 +27,7 @@ for i in range(4):
     rnd = random.sample(range(0, 10), 4)
 
     for i in range(4):
-        f = open("/home/ali/Desktop/python_projects/quiz/question.txt", "r")
+        f = open(BASE_DIR / "quiz/question.txt", "r")
         temp = str(f.readlines()[rnd[i]:rnd[i]+1])
         f.close()
         answer_code.append(int((temp[len(temp)-6:len(temp)-4]))-1)
@@ -36,7 +38,7 @@ for i in range(4):
         line_id = (int(answer_code[i])+j)
         # print(line_id)
 
-        f = open("/home/ali/Desktop/python_projects/quiz/question.txt", "r")
+        f = open(BASE_DIR / "quiz/question.txt", "r")
         answer_temp = (str(f.readlines()[line_id:line_id+1]))
 
 
@@ -82,7 +84,7 @@ def logging_in():
     global username
     username = input_name_signin.get()
 
-    mail = open("/home/ali/Desktop/python_projects/quiz/accounts.txt", "r")
+    mail = open(BASE_DIR / "quiz/accounts.txt", "r")
     temp_mail = mail.readlines()[0::3]
     mail.close()
 
@@ -92,7 +94,7 @@ def logging_in():
     for i in range(len(temp_mail)):
         if username == temp_mail[i]:
             print('email ok!')
-            pass_check = open("/home/ali/Desktop/python_projects/quiz/accounts.txt", "r")
+            pass_check = open(BASE_DIR / "quiz/accounts.txt", "r")
             pass_temp = str(pass_check.readlines()[i * 3 + 1:i * 3 + 2:])
             print(pass_temp)
             pass_temp = pass_temp[2:len(pass_temp) - 4]
@@ -151,7 +153,7 @@ def siggning_up():
                                                         if not user_all_lower:
 
                                                             mail = open(
-                                                                "/home/ali/Desktop/python_projects/quiz/accounts.txt",
+                                                                BASE_DIR /"quiz/accounts.txt",
                                                                 "r")
                                                             temp_mail = mail.readlines()[0::3]
                                                             mail.close()
@@ -168,7 +170,7 @@ def siggning_up():
 
                                                             if (not name_exist):
                                                                 file = open(
-                                                                    "/home/ali/Desktop/python_projects/quiz/accounts.txt",
+                                                                    BASE_DIR / "quiz/accounts.txt",
                                                                     "a")
                                                                 file.write(input_name.get() + "\n")
                                                                 file.write(input_pass.get() + "\n")
@@ -238,7 +240,7 @@ def show_msg():
 
 
 def write_scores():
-    file = open("/home/ali/Desktop/python_projects/quiz/score.txt", "a")
+    file = open(BASE_DIR / "quiz/score.txt", "a")
     file.write(username + "\n")
     file.write(str(score) + "\n")
     file.close()
